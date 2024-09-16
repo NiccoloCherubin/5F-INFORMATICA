@@ -1,0 +1,33 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column; /*dice che le cose sono una sopra l'altra*/
+    min-height: 100vh;
+}
+
+#navbar {
+    background-color: #0099cc;
+    height: 50px;
+}
+
+#body {
+    flex: 1;
+    display: flex;
+}
+
+#sidebar {
+    background-color: #cc9900;
+    width: 200px;
+}
+
+#main-content {
+    background-color: #99cc00;
+    flex: 1;
+    padding: 20px;
+}
+
+#footer {
+    background-color: #666666;
+    height: 50px;
+}
