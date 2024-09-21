@@ -3,31 +3,62 @@ body {
     padding: 0;
     display: flex;
     flex-direction: column; /*dice che le cose sono una sopra l'altra*/
-    min-height: 100vh;
+    height: 100vh; /*viewport height*/
 }
 
 #navbar {
     background-color: #0099cc;
     height: 50px;
+    padding: 2%;
 }
 
 #body {
     flex: 1;
-    display: flex;
+    display: flex;    
 }
-
-#sidebar {
-    background-color: #cc9900;
-    width: 200px;
+#sidebar{
+    margin:0;
+    width:250px;    
+    position:relative;
+    padding: 0;
+    text-align: left;
+    background-color: orange;
+    border-left: solid 2px gray;
 }
 
 #main-content {
     background-color: #99cc00;
-    flex: 1;
-    padding: 20px;
+    padding: 2%;
+    display: flex;
+    flex-grow: 1; /* adjust the width proportionally */
+    overflow-y: auto; /* add scrollbar to #main-content */
 }
 
 #footer {
-    background-color: #666666;
-    height: 50px;
+    padding: 2%;
+    bottom: 0;
+    position: fixed;
+    display: flex;
+    background-color: #989896;
+    height: 5%;
+    width: 100%;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 10px; /* width of the scrollbar */
+  height: 10px; /* height of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* color of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; /* color of the scrollbar thumb */
+  border-radius: 10px; /* rounded corners for the scrollbar thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* hover color of the scrollbar thumb */
 }
