@@ -1,32 +1,33 @@
 <?php
-// codice php in testa al documento
-echo 'HelloWorld! Cheru merda!!1!!11!';
-$var1 = "Boo";
+require_once 'Dispositivo.php';
+require_once 'Smartphone.php';
 
-$cheruMerda = "boja fauss";
+$s1 = new Smartphone("Snapdragon 888", "Samsung");
+$s2 = new Smartphone("Snapdragon 888", "Samsung");
 
-define('Pigreco', 3.14); // before PHP 7.0
-/*integer double boolean string
-non imperativo*/
+echo $s1->accendi()."<br>";
 
-/*mantissa o roba del genere
-define('Pigreco', 3.14);
-*/
-?>
-<!doctype html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1><?php echo $var1;
-    echo $cheruMerda;
-    echo "\n\r";
-    echo PHP_INT_MAX;
-    ?></h1>
-</body>
-</html>
+// non è possibile creare un oggetto di tipo dispositivo
+
+echo "Confronto '==' tra s1 e s2: " . ($s1 == $s2 ? 'true' : 'false') . "<br>";
+echo "Confronto '===' tra s1 e s2: " . ($s1 === $s2 ? 'true' : 'false') . "<br>";
+
+$s1 = $s2;
+echo "Confronto '==' tra s1 e s2 dopo assegnazione: " . ($s1 == $s2 ? 'true' : 'false') . "<br>";
+echo "Confronto '===' tra s1 e s2 dopo assegnazione: " . ($s1 === $s2 ? 'true' : 'false') . "<br>";
+
+$s3 = clone $s1;
+echo "Confronto '==' tra s1 e s3 dopo clonazione: " . ($s1 == $s3 ? 'true' : 'false') . "<br>";
+echo "Confronto '===' tra s1 e s3 dopo clonazione: " . ($s1 === $s3 ? 'true' : 'false') . "<br>";
+
+echo "La classe Smartphone esiste? " . (class_exists('Smartphone') ? 'true' : 'false') . "<br>";
+
+echo "Classe dell'oggetto s1: " . get_class($s1) . "<br>";
+
+echo "s1 è un'istanza di Smartphone? " . (is_a($s1, 'Smartphone') ? 'true' : 'false') . "<br>";
+
+echo "s1 ha la proprietà 'cpu'? " . (property_exists($s1, 'cpu') ? 'true' : 'false') . "<br>";
+
+echo "s1 ha il metodo 'accendi'? " . (method_exists($s1, 'accendi') ? 'true' : 'false') . "<br>";
+
+echo "Classe di s1 usando ::class: " . $s1::class . "<br>";
