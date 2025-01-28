@@ -1,0 +1,10 @@
+errore: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'dbitis.student' doesn't exist--2025-Jan-Tue- 01:14:36
+errore: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'dbitis.student' doesn't exist--2025-Jan-Tue- 01:14:59
+errore: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'dbitis.student' doesn't exist--2025-Jan-Tue- 01:14:59
+errore: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'dbitis.student' doesn't exist--2025-Jan-Tue- 01:15:00
+errore: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens--2025-Jan-Tue- 01:18:13
+errore: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens--2025-Jan-Tue- 01:18:25
+errore: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens--2025-Jan-Tue- 01:18:25
+errore: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens--2025-Jan-Tue- 01:18:25
+errore: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens--2025-Jan-Tue- 01:18:25
+errore: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens--2025-Jan-Tue- 01:18:25
