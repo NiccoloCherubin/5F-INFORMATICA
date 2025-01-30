@@ -1,6 +1,7 @@
 <?php
 class Libro
 {
+
     private int $id;
     private string $titolo;
     private string $autore;
