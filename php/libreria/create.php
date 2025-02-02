@@ -27,9 +27,9 @@ try {
             ':anno_pubblicazione' => $anno_pubblicazione
         ]);
 
-        // Redirect dell'user a read.php dopo aver aggiunto il libro
         header("Location: read.php");
         exit();
+
     }
 } catch (PDOException $e) {
     echo "<div class='alert alert-danger mt-3'>Errore: " . $e->getMessage() . "</div>";
@@ -38,7 +38,7 @@ try {
 
 <div class="container mt-5">
     <h2>Inserisci un Nuovo Libro</h2>
-    <form method="post" action="insert_book.php">
+    <form method="post" action="create.php">
         <div class="mb-3">
             <label for="titolo" class="form-label">Titolo</label>
             <input type="text" class="form-control" id="titolo" name="titolo" required>
