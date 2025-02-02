@@ -26,10 +26,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="create.html">Aggiungi Libro</a></li>
-                <li class="nav-item"><a class="nav-link" href="read.html">Visualizza Libri</a></li>
-                <li class="nav-item"><a class="nav-link" href="update.html">Aggiorna Prezzo</a></li>
-                <li class="nav-item"><a class="nav-link" href="delete.html">Rimuovi Libro</a></li>
+                <li class="nav-item"><a class="nav-link" href="create.php">Aggiungi Libro</a></li>
+                <li class="nav-item"><a class="nav-link" href="read.php">Visualizza Libri</a></li>
+                <li class="nav-item"><a class="nav-link" href="update.php">Aggiorna Prezzo</a></li>
+                <li class="nav-item"><a class="nav-link" href="delete.php">Rimuovi Libro</a></li>
             </ul>
         </div>
     </div>
