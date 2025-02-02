@@ -9,7 +9,9 @@ try {
                  libri.prezzo, libri.anno_pubblicazione
           FROM libri
           JOIN autori ON libri.autore_ID = autori.ID
-          JOIN generi ON libri.genere_ID = generi.ID";
+          JOIN generi ON libri.genere_ID = generi.ID
+          ORDER BY libri.ID ASC";  // Aggiungi ORDER BY per ordinare per ID
+
 
     $stmt = $pdo->prepare($query);
     $stmt->execute();
