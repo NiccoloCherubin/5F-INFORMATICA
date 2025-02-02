@@ -78,6 +78,4 @@ try {
         <button type="submit" class="btn btn-primary">Aggiungi Libro</button>
     </form>
 </div>
-<script src="js/create.php"></script>
-
 <?php include "php/footer.php"; ?>
