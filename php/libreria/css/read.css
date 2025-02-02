@@ -1,0 +1,59 @@
+/* Miglioramento della tabella */
+.table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 12px 15px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.table thead {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #ddd;
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #fff;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+/* Aggiungi ombra e bordi arrotondati */
+.table-responsive {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+}
+
+/* Migliora l'aspetto delle celle */
+.table th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+.table td {
+    color: #333;
+}
+
+.table td, .table th {
+    border: 1px solid #ddd;
+}
+
+/* Pagine della tabella, se presente */
+.pagination {
+    justify-content: center;
+    margin-top: 20px;
+}
