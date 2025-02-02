@@ -1,3 +1,5 @@
+<?php
+?>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -32,20 +34,3 @@
         </div>
     </div>
 </nav>
-
-<!-- Main Content -->
-<main class="container text-center my-5 flex-grow-1">
-    <h2 class="mb-4">Gestisci i tuoi libri in modo semplice e veloce!</h2>
-    <p class="lead">Con la nostra applicazione puoi aggiungere, visualizzare, aggiornare e rimuovere i tuoi libri preferiti.</p>
-    <img src="library.jpg" alt="Immagine di una libreria" class="img-fluid rounded shadow mt-4">
-</main>
-
-<!-- Footer -->
-<footer class="bg-dark text-white text-center py-3 mt-auto">
-    <p class="mb-0">© 2025 Gestione Libreria. Tutti i diritti riservati.</p>
-</footer>
-
-<!-- Bootstrap Bundle JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
