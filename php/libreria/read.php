@@ -1,4 +1,4 @@
-<?php include 'header.php'; ?>
+<?php include 'php/header.php'; ?>
 
 <?php
 try {
@@ -54,4 +54,4 @@ try {
 }
 ?>
 
-<?php include 'footer.php'; ?>
+<?php include 'php/footer.php'; ?>
