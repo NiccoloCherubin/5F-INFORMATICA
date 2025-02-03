@@ -1,10 +1,7 @@
 <?php include 'php/header.php'; ?>
-
+<?php include "php/db.php"; ?>
 <?php
 try {
-    $pdo = new PDO("mysql:host=localhost;dbname=libreria", "root", "");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
     $query = "SELECT libri.ID, libri.titolo, autori.nome AS autore, generi.nome AS genere, 
                  libri.prezzo, libri.anno_pubblicazione
           FROM libri

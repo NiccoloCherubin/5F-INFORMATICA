@@ -1,11 +1,9 @@
 <?php include "php/header.php"; ?>
+<?php include "php/db.php"; ?>
 
 <?php
 // Connection to the database
 try {
-    $pdo = new PDO("mysql:host=localhost;dbname=libreria", "root", "");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Get form data
         $titolo = $_POST['titolo'];

@@ -1,4 +1,5 @@
 <?php include "php/header.php"; ?>
+<?php include "php/db.php"; ?>
 
 <?php
 // Verifica se l'ID è presente e valido
@@ -9,9 +10,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 }
 
 try {
-    $pdo = new PDO("mysql:host=localhost;dbname=libreria", "root", "");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
     // Recupero dati del libro
     $query = "SELECT * FROM libri WHERE ID = :id";
     $stmt = $pdo->prepare($query);
