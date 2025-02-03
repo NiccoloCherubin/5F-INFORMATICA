@@ -10,13 +10,11 @@ try {
           FROM libri
           JOIN autori ON libri.autore_ID = autori.ID
           JOIN generi ON libri.genere_ID = generi.ID
-          ORDER BY libri.ID ASC";  // Aggiungi ORDER BY per ordinare per ID
-
+          ORDER BY libri.ID ASC";
 
     $stmt = $pdo->prepare($query);
     $stmt->execute();
 
-    // Recupero i risultati correttamente
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo "<link rel='stylesheet' href='css/read.css'>";
@@ -31,11 +29,11 @@ try {
                         <th>Genere</th>
                         <th>Prezzo</th>
                         <th>Anno di Pubblicazione</th>
+                        <th>Azioni</th>
                     </tr>
                 </thead>
                 <tbody>";
 
-    // Loop through the results and display rows
     foreach ($result as $row) {
         echo "<tr>
                 <td>{$row['ID']}</td>
@@ -44,12 +42,16 @@ try {
                 <td>{$row['genere']}</td>
                 <td>€{$row['prezzo']}</td>
                 <td>{$row['anno_pubblicazione']}</td>
+                <td>
+                    <a href='update.php?id={$row['ID']}' class='btn btn-warning btn-sm'>Modifica</a>
+                    <a href='delete.php?id={$row['ID']}' class='btn btn-danger btn-sm' onclick='return confirm(\"Sei sicuro di voler eliminare questo libro?\")'>Elimina</a>
+                </td>
               </tr>";
     }
 
     echo "</tbody>
           </table>
-        </div>";;
+        </div>";
 
 } catch (PDOException $e) {
     echo "Errore: " . $e->getMessage();
