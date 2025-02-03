@@ -15,7 +15,7 @@
 <body class="d-flex flex-column min-vh-100">
 <!-- Header -->
 <header class="bg-primary text-white text-center py-4">
-    <h1>Benvenuto nella Gestione Libreria</h1>
+    <h1>Gestione Libreria</h1>
 </header>
 
 <!-- Navbar -->
@@ -29,8 +29,6 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="create.php">Aggiungi Libro</a></li>
                 <li class="nav-item"><a class="nav-link" href="read.php">Visualizza Libri</a></li>
-                <li class="nav-item"><a class="nav-link" href="update.php">Aggiorna Prezzo</a></li>
-                <li class="nav-item"><a class="nav-link" href="delete.php">Rimuovi Libro</a></li>
             </ul>
         </div>
     </div>
