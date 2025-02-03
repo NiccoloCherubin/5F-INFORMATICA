@@ -13,7 +13,8 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Recupero dati del libro
-    $stmt = $pdo->prepare("SELECT * FROM libri WHERE ID = :id");
+    $query = "SELECT * FROM libri WHERE ID = :id";
+    $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $id, PDO::PARAM_INT);
     $stmt->execute();
     $libro = $stmt->fetch(PDO::FETCH_ASSOC);
