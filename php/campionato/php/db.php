@@ -1,14 +1,14 @@
 <?php
-$host = "localhost"; // o l'indirizzo del tuo server MySQL
-$dbname = "Campionato_Automobilistico";
-$username = "root"; // o il tuo username MySQL
-$password = ""; // o la tua password MySQL
+$host = 'localhost'; // o l'indirizzo del tuo server
+$dbname = 'Campionato_Automobilistico'; // il nome del tuo database
+$username = 'root'; // il tuo username del DB
+$password = ''; // la tua password del DB
 
+// Creazione della connessione
 try {
-    // Connessione al database
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+    die("Connection failed: " . $e->getMessage());
 }
 ?>
