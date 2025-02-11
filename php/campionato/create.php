@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $pdo->prepare($query);
             $stmt->execute([$nome_casa]);
 
-            header("Location: create.php"); // Ricarica la pagina dopo l'inserimento
+            header("Location: read.php"); // Ricarica la pagina dopo l'inserimento
             exit();
         }
     }
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $pdo->prepare($query);
             $stmt->execute([$nome, $cognome, $numero, $nazionalita_id, $casa_id]);
 
-            header("Location: create.php"); // Ricarica la pagina dopo l'inserimento
+            header("Location: read.php"); // Ricarica la pagina dopo l'inserimento
             exit();
         }
     }
