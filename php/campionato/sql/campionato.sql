@@ -1,22 +1,22 @@
-CREATE DATABASE Campionato_Automobilistico;
+create DATABASE Campionato_Automobilistico;
 USE Campionato_Automobilistico;
 
 -- Tabella NAZIONALITA
 CREATE TABLE Nazionalita (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    descrizione VARCHAR(50) NOT NULL
+    descrizione VARCHAR(50) NOT null unique
 );
 
 -- Tabella Case_Automobilistiche
 CREATE TABLE Case_Automobilistiche (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(50) NOT NULL
+    nome VARCHAR(50) NOT null unique
 );
 
 -- Tabella Colore_Livree
 CREATE TABLE Colore_Livree (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    descrizione VARCHAR(50) NOT NULL
+    descrizione VARCHAR(50) NOT null unique
 );
 
 -- Relazione Case_Automobilistiche -> Colore_Livree
@@ -24,8 +24,8 @@ CREATE TABLE Decidere (
     casa_id INT,
     livrea_id INT,
     PRIMARY KEY (casa_id, livrea_id),
-    FOREIGN KEY (casa_id) REFERENCES Case_Automobilistiche(id),
-    FOREIGN KEY (livrea_id) REFERENCES Colore_Livree(id)
+    FOREIGN KEY (casa_id) REFERENCES Case_Automobilistiche(id) ON DELETE CASCADE,
+    FOREIGN KEY (livrea_id) REFERENCES Colore_Livree(id) ON DELETE CASCADE
 );
 
 -- Tabella Piloti
@@ -35,7 +35,7 @@ CREATE TABLE Piloti (
     cognome VARCHAR(50) NOT NULL,
     numero INT NOT NULL UNIQUE,
     nazionalita_id INT NOT NULL,
-    FOREIGN KEY (nazionalita_id) REFERENCES Nazionalita(id)
+    FOREIGN KEY (nazionalita_id) REFERENCES Nazionalita(id) ON DELETE cascade
 );
 
 -- Relazione Piloti -> Case_Automobilistiche
@@ -43,8 +43,8 @@ CREATE TABLE Appartenere (
     Piloti_id INT,
     casa_id INT,
     PRIMARY KEY (Piloti_id, casa_id),
-    FOREIGN KEY (Piloti_id) REFERENCES Piloti(id),
-    FOREIGN KEY (casa_id) REFERENCES Case_Automobilistiche(id)
+    FOREIGN KEY (Piloti_id) REFERENCES Piloti(id) ON DELETE CASCADE,
+    FOREIGN KEY (casa_id) REFERENCES Case_Automobilistiche(id) ON DELETE CASCADE
 );
 
 -- Tabella Gare
@@ -59,8 +59,8 @@ CREATE TABLE Partecipare (
     Piloti_id INT,
     Gare_id INT,
     PRIMARY KEY (Piloti_id, Gare_id),
-    FOREIGN KEY (Piloti_id) REFERENCES Piloti(id),
-    FOREIGN KEY (Gare_id) REFERENCES Gare(id)
+    FOREIGN KEY (Piloti_id) REFERENCES Piloti(id) ON DELETE CASCADE,
+    FOREIGN KEY (Gare_id) REFERENCES Gare(id) ON DELETE CASCADE
 );
 
 -- Tabella Risultati (relativa a ogni Gara)
@@ -71,9 +71,10 @@ CREATE TABLE Risultati (
     posizione_finale INT NOT NULL,
     tempo_veloce TIME NOT NULL,
     punti_assegnati INT NOT NULL,
-    FOREIGN KEY (Piloti_id) REFERENCES Piloti(id),
-    FOREIGN KEY (Gare_id) REFERENCES Gare(id)
+    FOREIGN KEY (Piloti_id) REFERENCES Piloti(id) ON DELETE CASCADE,
+    FOREIGN KEY (Gare_id) REFERENCES Gare(id) ON DELETE CASCADE
 );
+
 
 INSERT INTO Nazionalita (descrizione) VALUES
 ('Italia'),
@@ -136,4 +137,5 @@ INSERT INTO Risultati (Piloti_id, Gare_id, posizione_finale, tempo_veloce, punti
 (3, 2, 1, '01:23:00', 25), -- Verstappen 1° al Gran Premio di Monaco
 (4, 3, 1, '01:22:30', 25), -- Norris 1° al Gran Premio di Spagna
 (5, 2, 2, '01:24:00', 18); -- Ocon 2° al Gran Premio di Monaco
+
 
