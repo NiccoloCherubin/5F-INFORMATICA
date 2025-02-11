@@ -28,7 +28,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="create.php">Aggiungi Casa Automobilistica</a></li>
+                <li class="nav-item"><a class="nav-link" href="create.php">Aggiungi</a></li>
                 <li class="nav-item"><a class="nav-link" href="read.php">Visualizza Piloti</a></li>
                 <li class="nav-item"><a class="nav-link" href="gare.php">Visualizza Gare</a></li>
                 <li class="nav-item"><a class="nav-link" href="risultati.php">Visualizza Risultati</a></li>
