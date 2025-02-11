@@ -27,6 +27,7 @@ $piloti = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <th>Nazionalità</th>
             <th>Casa Automobilistica</th>
             <th>Livrea</th>
+            <th>Azioni</th> <!-- Aggiunta colonna per i tasti -->
         </tr>
         </thead>
         <tbody>
@@ -39,6 +40,12 @@ $piloti = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td><?php echo $pilota['nazionalita']; ?></td>
                 <td><?php echo $pilota['casa_nome']; ?></td>
                 <td><?php echo $pilota['livrea']; ?></td>
+                <td>
+                    <!-- Tasto Modifica -->
+                    <a href="update.php?id=<?php echo $pilota['id']; ?>" class="btn btn-warning btn-sm">Modifica</a>
+                    <!-- Tasto Elimina -->
+                    <a href="delete.php?id=<?php echo $pilota['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Sei sicuro di voler eliminare questo pilota?')">Elimina</a>
+                </td>
             </tr>
         <?php endforeach; ?>
         </tbody>
