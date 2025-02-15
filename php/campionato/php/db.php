@@ -1,8 +1,8 @@
 <?php
-$host = 'localhost'; // o l'indirizzo del tuo server
-$dbname = 'Campionato_Automobilistico'; // il nome del tuo database
-$username = 'root'; // il tuo username del DB
-$password = ''; // la tua password del DB
+$host = 'localhost'; // o l'indirizzo del server
+$dbname = 'Campionato_Automobilistico'; // il nome del database
+$username = 'root'; // username del DB
+$password = ''; // password del DB
 
 // Creazione della connessione
 try {

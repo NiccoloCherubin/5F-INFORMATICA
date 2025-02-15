@@ -1,5 +1,5 @@
 -- Creazione del database
-CREATE DATABASE Campionato_Automobilistico;
+create DATABASE Campionato_Automobilistico;
 USE Campionato_Automobilistico;
 
 -- Tabella NAZIONALITA
@@ -42,25 +42,19 @@ data DATE NOT NULL
 );
 
 -- Relazione Piloti -> Gare (partecipazione)
+-- Creazione della tabella Partecipare
 CREATE TABLE Partecipare (
-Piloti_id INT,
-Gare_id INT,
-PRIMARY KEY (Piloti_id, Gare_id),
-FOREIGN KEY (Piloti_id) REFERENCES Piloti(id) ON DELETE CASCADE,
-FOREIGN KEY (Gare_id) REFERENCES Gare(id) ON DELETE CASCADE
+    Piloti_id INT not null,
+    Gare_id INT not null,
+    posizione_finale INT not null,
+    tempo_veloce TIME not null,
+    punti_assegnati INT not null,
+    PRIMARY KEY (Piloti_id, Gare_id),
+    FOREIGN KEY (Piloti_id) REFERENCES Piloti(id) ON DELETE CASCADE,
+    FOREIGN KEY (Gare_id) REFERENCES Gare(id) ON DELETE CASCADE
 );
 
--- Tabella Risultati (relativa a ogni Gara)
-CREATE TABLE Risultati (
-id INT PRIMARY KEY AUTO_INCREMENT,
-Piloti_id INT NOT NULL,
-Gare_id INT NOT NULL,
-posizione_finale INT NOT NULL,
-tempo_veloce TIME NOT NULL,
-punti_assegnati INT NOT NULL,
-FOREIGN KEY (Piloti_id) REFERENCES Piloti(id) ON DELETE CASCADE,
-FOREIGN KEY (Gare_id) REFERENCES Gare(id) ON DELETE CASCADE
-);
+
 
 -- Inserimento dati
 INSERT INTO Nazionalita (descrizione) VALUES
@@ -96,16 +90,11 @@ INSERT INTO Gare (nome, data) VALUES
 ('Gran Premio di Monaco', '2025-05-24'),
 ('Gran Premio di Spagna', '2025-06-14');
 
-INSERT INTO Partecipare (Piloti_id, Gare_id) VALUES
-(1, 1),  -- Vettel partecipa al Gran Premio d'Italia
-(2, 1),  -- Hamilton partecipa al Gran Premio d'Italia
-(3, 2),  -- Verstappen partecipa al Gran Premio di Monaco
-(4, 3),  -- Norris partecipa al Gran Premio di Spagna
-(5, 2);  -- Ocon partecipa al Gran Premio di Monaco
+INSERT INTO Partecipare (Piloti_id, Gare_id, posizione_finale, tempo_veloce, punti_assegnati) VALUES
+(1, 1, 1, '01:23:45', 25),  -- Vettel al Gran Premio d'Italia (1° posto, tempo veloce 1h23m45s, 25 punti)
+(2, 1, 2, '01:24:30', 18),  -- Hamilton al Gran Premio d'Italia (2° posto, tempo veloce 1h24m30s, 18 punti)
+(3, 2, 1, '01:35:15', 25),  -- Verstappen al Gran Premio di Monaco (1° posto, tempo veloce 1h35m15s, 25 punti)
+(4, 3, 3, '01:40:20', 15),  -- Norris al Gran Premio di Spagna (3° posto, tempo veloce 1h40m20s, 15 punti)
+(5, 2, 4, '01:36:50', 12);  -- Ocon al Gran Premio di Monaco (4° posto, tempo veloce 1h36m50s, 12 punti)
 
-INSERT INTO Risultati (Piloti_id, Gare_id, posizione_finale, tempo_veloce, punti_assegnati) VALUES
-(1, 1, 1, '01:20:30', 25),  -- Vettel 1° al Gran Premio d'Italia
-(2, 1, 2, '01:21:00', 18),  -- Hamilton 2° al Gran Premio d'Italia
-(3, 2, 1, '01:23:00', 25),  -- Verstappen 1° al Gran Premio di Monaco
-(4, 3, 1, '01:22:30', 25),  -- Norris 1° al Gran Premio di Spagna
-(5, 2, 2, '01:24:00', 18);  -- Ocon 2° al Gran Premio di Monaco
+

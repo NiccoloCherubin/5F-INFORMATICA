@@ -22,7 +22,6 @@ $gare = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <th>Nome Gara</th>
             <th>Data</th>
             <th>Piloti Partecipanti</th>
-            <th>Azioni</th>
         </tr>
         </thead>
         <tbody>
@@ -32,11 +31,7 @@ $gare = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td>{$gara['id']}</td>
                     <td>{$gara['gara_nome']}</td>
                     <td>" . date('d-m-Y', strtotime($gara['data'])) . "</td>
-                    <td>{$gara['piloti']}</td>
-                    <td>
-                        <a href='update_gara.php?id={$gara['id']}' class='btn btn-warning btn-sm'>Modifica</a>
-                        <a href='delete_gara.php?id={$gara['id']}' class='btn btn-danger btn-sm' onclick='return confirm(\"Sei sicuro di voler eliminare questa gara?\")'>Elimina</a>
-                    </td>
+                    <td>{$gara['piloti']}</td>                    
                   </tr>";
         }
         ?>
