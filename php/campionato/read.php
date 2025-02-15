@@ -31,24 +31,26 @@ $piloti = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($piloti as $pilota) : ?>
-            <tr>
-                <td><?php echo $pilota['id']; ?></td>
-                <td><?php echo $pilota['nome']; ?></td>
-                <td><?php echo $pilota['cognome']; ?></td>
-                <td><?php echo $pilota['numero']; ?></td>
-                <td><?php echo $pilota['nazionalita']; ?></td>
-                <td><?php echo $pilota['casa_nome']; ?></td>
-                <td><?php echo $pilota['livrea']; ?></td>
-                <td>
-                    <!-- Tasto Modifica -->
-                    <a href="update.php?id=<?php echo $pilota['id']; ?>" class="btn btn-warning btn-sm">Modifica</a>
-                    <!-- Tasto Elimina -->
-                    <a href="delete.php?id=<?php echo $pilota['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Sei sicuro di voler eliminare questo pilota?')">Elimina</a>
-                </td>
-            </tr>
-        <?php endforeach; ?>
+        <?php
+        foreach ($piloti as $pilota) {
+            echo "<tr>
+            <td>{$pilota['id']}</td>
+            <td>{$pilota['nome']}</td>
+            <td>{$pilota['cognome']}</td>
+            <td>{$pilota['numero']}</td>
+            <td>{$pilota['nazionalita']}</td>
+            <td>{$pilota['casa_nome']}</td>
+            <td>{$pilota['livrea']}</td>
+            <td>
+                <a href='update.php?id={$pilota['id']}' class='btn btn-warning btn-sm'>Modifica</a>
+                <a href='delete.php?id={$pilota['id']}' class='btn btn-danger btn-sm' onclick='return confirm(\"Sei sicuro di voler eliminare questo pilota?\")'>Elimina</a>
+            </td>
+          </tr>";
+        }
+        ?>
         </tbody>
+
+
     </table>
 </div>
 

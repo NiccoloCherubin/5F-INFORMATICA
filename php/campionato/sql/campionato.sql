@@ -35,8 +35,11 @@ CREATE TABLE Piloti (
     cognome VARCHAR(50) NOT NULL,
     numero INT NOT NULL UNIQUE,
     nazionalita_id INT NOT NULL,
-    FOREIGN KEY (nazionalita_id) REFERENCES Nazionalita(id) ON DELETE cascade
+    casa_id INT, -- Aggiunta la colonna per la casa automobilistica
+    FOREIGN KEY (nazionalita_id) REFERENCES Nazionalita(id) ON DELETE CASCADE,
+    FOREIGN KEY (casa_id) REFERENCES Case_Automobilistiche(id) ON DELETE CASCADE
 );
+
 
 -- Relazione Piloti -> Case_Automobilistiche
 CREATE TABLE Appartenere (
