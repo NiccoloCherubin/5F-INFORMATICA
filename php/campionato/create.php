@@ -52,6 +52,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
     }
+
+    // Associazione del Pilota alla Gara
+    if (isset($_POST['submit_associazione'])) {
+        $pilota_id = $_POST['pilota_id'];
+        $gara_id = $_POST['gara_id'];
+
+        // Controllo se il pilota è già associato alla gara
+        $query = "SELECT COUNT(*) FROM Partecipare WHERE pilota_id = ? AND gara_id = ?";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([$pilota_id, $gara_id]);
+        $count = $stmt->fetchColumn();
+
+        if ($count > 0) {
+            $error_message = "Errore: il pilota è già associato a questa gara.";
+        } else {
+            // Associazione del pilota alla gara
+            $query = "INSERT INTO Partecipare (pilota_id, gara_id) VALUES (?, ?)";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute([$pilota_id, $gara_id]);
+
+            header("Location: read.php"); // Ricarica la pagina dopo l'inserimento
+            exit();
+        }
+    }
 }
 ?>
 
@@ -60,13 +84,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aggiungi Pilota e Casa Automobilistica</title>
+    <title>Aggiungi Casa Automobilistica</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container mt-4">
-    <h2>Aggiungi Casa Automobilistica e Pilota</h2>
-
     <?php
     if (isset($error_message)) {
         echo '<div class="alert alert-danger">' . $error_message . '</div>';
@@ -86,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <hr> <!-- Separatore tra i form -->
 
     <!-- FORM PER IL PILOTA -->
-    <form action="create.php" method="POST">
+    <form action="create.php" method="POST" class="mb-4">
         <h3>Aggiungi Pilota</h3>
         <div class="mb-3">
             <label for="nome" class="form-label">Nome</label>
@@ -129,6 +151,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </select>
         </div>
         <button type="submit" name="submit_pilota" class="btn btn-primary">Aggiungi Pilota</button>
+    </form>
+
+    <hr> <!-- Separatore tra i form -->
+
+    <!-- FORM PER L'ASSOCIAZIONE DEL PILOTA A UNA GARA -->
+    <form action="create.php" method="POST">
+        <h3>Associa Pilota a Gara</h3>
+        <div class="mb-3">
+            <label for="pilota_id" class="form-label">Pilota</label>
+            <select name="pilota_id" class="form-control" required>
+                <option value="">Seleziona un pilota</option>
+                <?php
+                // Ottiene i piloti dal database
+                $query = "SELECT id, nome, cognome FROM Piloti";
+                $stmt = $pdo->query($query);
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<option value='" . $row['id'] . "'>" . $row['nome'] . " " . $row['cognome'] . "</option>";
+                }
+                ?>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="gara_id" class="form-label">Gara</label>
+            <select name="gara_id" class="form-control" required>
+                <option value="">Seleziona una gara</option>
+                <?php
+                // Ottiene le gare dal database
+                $query = "SELECT id, nome FROM Gare";
+                $stmt = $pdo->query($query);
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<option value='" . $row['id'] . "'>" . $row['nome'] . "</option>";
+                }
+                ?>
+            </select>
+        </div>
+        <button type="submit" name="submit_associazione" class="btn btn-primary">Associa Pilota</button>
     </form>
 </div>
 
