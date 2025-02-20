@@ -4,7 +4,7 @@ include "db.php";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome = $_POST['nome'];
     $data_inizio = $_POST['data_inizio'];
-    $data_fine = $_POST['data_fine'];
+    $data_fine = $_POST['data_fine'] ?: NULL; // Permetti il NULL se il sovrano è ancora in carica
 
     // Recupero il numero dell'ultima immagine
     $query = "SELECT MAX(immagine) AS ultima_immagine FROM sovrani";
@@ -32,14 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Inserimento del nuovo sovrano
-    $stmt = $pdo->prepare("INSERT INTO sovrani (nome, data_inizio, data_fine, immagine, estensione, sovrano_precendente, sovrano_successivo) 
-                       VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO sovrani (nome, data_inizio, data_fine, immagine, estensione, sovrano_precedente, sovrano_successivo) 
+                       VALUES (?, ?, ?, ?, ?, NULL, NULL)");
 
-    // Inizializza i campi sovrano_precendente e sovrano_successivo a NULL
-    $sovrano_precendente = NULL;
-    $sovrano_successivo = NULL;
-
-    if ($stmt->execute([$nome, $data_inizio, $data_fine, $immagine, $estensione, $sovrano_precendente, $sovrano_successivo])) {
+    if ($stmt->execute([$nome, $data_inizio, $data_fine, $immagine, $estensione])) {
         // Redirigi alla pagina di visualizzazione dopo l'inserimento
         header("Location: ../visualizza.php");
         exit();

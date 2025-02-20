@@ -1,4 +1,5 @@
 <?php
+include "php/header.php";
 include "php/db.php";
 
 // Ottieni tutti i sovrani
@@ -7,41 +8,25 @@ $stmt = $pdo->prepare($query);
 $stmt->execute();
 $sovrani = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Aggiorna i riferimenti ai sovrani precedenti e successivi
-foreach ($sovrani as $sovrano) {
-    // Trova il sovrano precedente
-    $query_precendente = "SELECT nome FROM sovrani WHERE data_fine < :data_inizio ORDER BY data_fine DESC LIMIT 1";
-    $stmt_precendente = $pdo->prepare($query_precendente);
-    $stmt_precendente->bindParam(':data_inizio', $sovrano['data_inizio']);
-    $stmt_precendente->execute();
-    $sovrano_precendente = $stmt_precendente->fetchColumn();
+// Ciclo per aggiornare i sovrani
+for ($i = 0; $i < count($sovrani); $i++) {
+    $sovrano = $sovrani[$i];
 
-    // Trova il sovrano successivo
-    $query_successivo = "SELECT nome FROM sovrani WHERE data_inizio > :data_inizio ORDER BY data_inizio ASC LIMIT 1";
-    $stmt_successivo = $pdo->prepare($query_successivo);
-    $stmt_successivo->bindParam(':data_inizio', $sovrano['data_inizio']);
-    $stmt_successivo->execute();
-    $sovrano_successivo = $stmt_successivo->fetchColumn();
+    // Il sovrano precedente è quello immediatamente precedente nell'array
+    $sovrano_precedente = $i > 0 ? $sovrani[$i - 1]['nome'] : NULL;
 
-    // Imposta null se non esistono sovrani precedenti o successivi
-    $sovrano_precendente = $sovrano_precendente ?: NULL;
-    $sovrano_successivo = $sovrano_successivo ?: NULL;
+    // Il sovrano successivo è quello immediatamente successivo nell'array
+    $sovrano_successivo = $i < count($sovrani) - 1 ? $sovrani[$i + 1]['nome'] : NULL;
 
-    // Se è stato trovato un sovrano successivo, aggiorna il campo sovrano_precendente del sovrano successivo
-    if ($sovrano_successivo) {
-        $query_update = "UPDATE sovrani SET sovrano_precendente = ? WHERE nome = ?";
-        $stmt_update = $pdo->prepare($query_update);
-        $stmt_update->execute([$sovrano['nome'], $sovrano_successivo]);
-    }
+    echo "Sovrano: " . $sovrano['nome'] . "<br>";
+    echo "Precedente: " . ($sovrano_precedente ?: 'Nessuno') . "<br>";
+    echo "Successivo: " . ($sovrano_successivo ?: 'Nessuno') . "<br>";
 
-    // Se è stato trovato un sovrano precedente, aggiorna il campo sovrano_successivo del sovrano precedente
-    if ($sovrano_precendente) {
-        $query_update = "UPDATE sovrani SET sovrano_successivo = ? WHERE nome = ?";
-        $stmt_update = $pdo->prepare($query_update);
-        $stmt_update->execute([$sovrano['nome'], $sovrano_precendente]);
-    }
+    // Aggiornamento nel database
+    $query_update = "UPDATE sovrani SET sovrano_precedente = ?, sovrano_successivo = ? WHERE nome = ?";
+    $stmt_update = $pdo->prepare($query_update);
+    $stmt_update->execute([$sovrano_precedente, $sovrano_successivo, $sovrano['nome']]);
 }
-
 ?>
 
 <!-- HTML per visualizzare la lista dei sovrani -->
@@ -54,6 +39,8 @@ foreach ($sovrani as $sovrano) {
             <th>Data Inizio</th>
             <th>Data Fine</th>
             <th>Immagine</th>
+            <th>Sovrano Precedente</th>
+            <th>Sovrano Successivo</th>
         </tr>
         </thead>
         <tbody>
@@ -62,9 +49,19 @@ foreach ($sovrani as $sovrano) {
                 <td><?= htmlspecialchars($sovrano['nome']) ?></td>
                 <td><?= htmlspecialchars($sovrano['data_inizio']) ?></td>
                 <td><?= htmlspecialchars($sovrano['data_fine']) ?></td>
-                <td><img src="../images/<?= htmlspecialchars($sovrano['immagine']) . '.' . htmlspecialchars($sovrano['estensione']) ?>" alt="Immagine di <?= htmlspecialchars($sovrano['nome']) ?>" width="50"></td>
+                <td>
+                    <?php if (!empty($sovrano['immagine']) && !empty($sovrano['estensione'])): ?>
+                        <img src="images/<?= htmlspecialchars($sovrano['immagine']) . '.' . htmlspecialchars($sovrano['estensione']) ?>"
+                             alt="Immagine di <?= htmlspecialchars($sovrano['nome']) ?>" width="50">
+                    <?php else: ?>
+                        Nessuna immagine
+                    <?php endif; ?>
+                </td>
+                <td><?= htmlspecialchars($sovrano['sovrano_precedente'] ?? 'Nessuno') ?></td>
+                <td><?= htmlspecialchars($sovrano['sovrano_successivo'] ?? 'Nessuno') ?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
 </div>
+<?php include 'php/footer.php'; ?>
