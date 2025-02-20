@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost'; // o l'indirizzo del server
-$dbname = 'Campionato_Automobilistico'; // il nome del database
+$dbname = 'utopia'; // il nome del database
 $username = 'root'; // username del DB
 $password = ''; // password del DB
 
