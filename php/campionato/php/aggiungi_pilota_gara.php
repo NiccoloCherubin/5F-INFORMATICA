@@ -8,13 +8,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tempo_veloce = $_POST['tempo_veloce'];
     $punti_assegnati = $_POST['punti_assegnati'];
 
-    // Query di inserimento nella tabella Risultati
-    $query = "INSERT INTO Risultati (Piloti_id, Gare_id, posizione_finale, tempo_veloce, punti_assegnati) 
+    // Query di inserimento nella tabella Partecipare
+    $query = "INSERT INTO Partecipare (Piloti_id, Gare_id, posizione_finale, tempo_veloce, punti_assegnati) 
               VALUES (?, ?, ?, ?, ?)";
 
     $stmt = $pdo->prepare($query);
 
     try {
+        // Eseguiamo la query con i parametri forniti
         $stmt->execute([$pilota_id, $gara_id, $posizione_finale, $tempo_veloce, $punti_assegnati]);
         echo "<script>alert('Pilota associato con successo alla gara!'); window.location.href='../create.php';</script>";
     } catch (PDOException $e) {
