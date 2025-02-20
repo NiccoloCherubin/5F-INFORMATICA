@@ -4,8 +4,8 @@ include 'php/header.php';
 ?>
 
 <main class="container mt-5 text-center">
-    <h2>Benvenuto al Campionato Automobilistico</h2>
-    <p>Gestisci e visualizza tutte le informazioni relative alle gare, i piloti e le case automobilistiche.</p>
+    <h2>Benvenuto al gestionale dei sovrani</h2>
+    <p>Gestisci e visualizza tutte le informazioni relative ai sovrani.</p>
 </main>
 
 <?php include 'php/footer.php'; ?>

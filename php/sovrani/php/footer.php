@@ -2,7 +2,7 @@
 ?>
 <!-- Footer -->
 <footer class="bg-dark text-white text-center py-3 mt-auto">
-    <p class="mb-0">© 2025 Campionato. Tutti i diritti riservati.</p>
+    <p class="mb-0">© 2025 sovrani. Tutti i diritti riservati.</p>
 </footer>
 
 <!-- Bootstrap Bundle JS -->

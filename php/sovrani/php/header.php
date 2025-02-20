@@ -15,8 +15,8 @@
 <body class="d-flex flex-column min-vh-100">
 <!-- Header -->
 <header class="bg-primary text-white text-center py-4">
-    <h1>Campionato Automobilistico</h1>
-    <p>Gestisci Gare, Piloti e Case Automobilistiche</p>
+    <h1>Sovrani</h1>
+    <p>Gestisci i sovrani del tuo regno</p>
 </header>
 
 <!-- Navbar -->
@@ -30,9 +30,7 @@
             <ul class="navbar-nav ms-auto">
 
                 <li class="nav-item"><a class="nav-link" href="create.php">Aggiungi</a></li>
-                <li class="nav-item"><a class="nav-link" href="read.php">Visualizza Piloti</a></li>
-                <li class="nav-item"><a class="nav-link" href="gare.php">Visualizza Gare</a></li>
-                <li class="nav-item"><a class="nav-link" href="risultati.php">Visualizza Risultati</a></li>
+                <li class="nav-item"><a class="nav-link" href="read.php">Visualizza</a></li>
             </ul>
         </div>
     </div>
