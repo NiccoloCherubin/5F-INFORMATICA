@@ -122,14 +122,14 @@ INSERT INTO Stati (descrizione) VALUES
 ('Consegnato');
 
 INSERT INTO Personale (nome, mail, password, Ruoli_id) VALUES 
-('Mario Rossi', 'mario.rossi@fastroute.com', SHA2('Password123!', 256), 1),
-('Luca Bianchi', 'luca.bianchi@fastroute.com', SHA2('Sicura2024*', 256), 2),
-('Anna Verdi', 'anna.verdi@fastroute.com', SHA2('Corriere#77', 256), 3);
+('Mario Rossi', 'mario.rossi@fastroute.com', '$2y$10$lsVEdSgwzqKE5gFeeO8d3O.piZ1.qVJVrIsdm0Vge7ygqBE8s7dQu',1),
+('Luca Bianchi', 'luca.bianchi@fastroute.com', '$2y$10$8GgZkreYa3swmaagc52T7uW.P5t2tp/HHHdhyB1VzVMNn3hPI1c1O',2),
+('Anna Verdi', 'anna.verdi@fastroute.com', '$2y$10$Sq5mY8lEq9gDcbbLEvCnPe7ooMVhNH0Zp2bcasKTnBKqgBOzJKrZi',3);
 
 INSERT INTO Clienti (nome, cognome, indirizzo, passw) VALUES 
-('Giovanni', 'Esposito', 'Via Roma 10, Napoli', SHA2('Clienti123!', 256)),
-('Laura', 'Ferrari', 'Corso Vittorio 25, Milano', SHA2('Milano2024!', 256)),
-('Stefano', 'Russo', 'Piazza Garibaldi 3, Roma', SHA2('Stefano@99', 256));
+('Giovanni', 'Esposito', 'Via Roma 10, Napoli', '$2y$10$ev58.YHizmB5Ymo7M2Mr/eqZzO//rP6bFHtYIuWk11lyHNU7UGS9W'),
+('Laura', 'Ferrari', 'Corso Vittorio 25, Milano', '$2y$10$qyVfApUump07MEI0naiS7uzrZVydobUEa.CWzFzhQTXmUk8i2OQSi'),
+('Stefano', 'Russo', 'Piazza Garibaldi 3, Roma', '$2y$10$djT1UuiL6kULVW2wIvg3I.ZUszEb1rzX84UuxvqqgTDkY/5zuVXDG');
 
 INSERT INTO Destinatari (nome, indirizzo) VALUES 
 ('Marco Neri', 'Via Torino 50, Milano'),

@@ -11,13 +11,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'] ?? '';
 
     if (!empty($mail) && !empty($password)) {
+        // Recupera l'utente dal database
         $user = Database::select("SELECT * FROM Personale WHERE mail = :mail", ['mail' => $mail]);
 
-        if ($user && password_verify($password, $user[0]->password)) {
-            $_SESSION['user_id'] = $user[0]->id;
-            $_SESSION['user_name'] = $user[0]->nome;
-            header("Location: dashboard.php");
-            exit();
+        if ($user) {
+            $user = $user[0]; // Estraggo il primo elemento dall'array
+            //  Confronto la password inserita con l'hash salvato nel database
+            if (password_verify($password, $user->password)) {
+                $_SESSION['user_id'] = $user->id;
+                $_SESSION['user_name'] = $user->nome;
+                header("Location: dashboard.php");
+                exit();
+            } else {
+                $error = "Credenziali non valide.";
+            }
         } else {
             $error = "Credenziali non valide.";
         }
@@ -26,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
 
 
 <?php include 'php/header.php'; ?>

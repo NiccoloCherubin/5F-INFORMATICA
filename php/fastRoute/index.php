@@ -6,5 +6,13 @@
     <p>Gestisci facilmente le spedizioni e le consegne dei pacchi.</p>
     <img src="immagini/corriere.png" alt="Immagine di un corriere" class="img-fluid rounded shadow mt-4">
 </main>
+<?php
+echo password_hash('Password123!', PASSWORD_DEFAULT) . "<br>";
+echo password_hash('Sicura2024!', PASSWORD_DEFAULT) . "<br>";
+echo password_hash('Corriere#77', PASSWORD_DEFAULT) . "<br>";
+echo password_hash('Clienti123!', PASSWORD_DEFAULT) . "<br>";
+echo password_hash('Milano2024!', PASSWORD_DEFAULT) . "<br>";
+echo password_hash('Stefano@99', PASSWORD_DEFAULT) . "<br>";
+?>
 
 <?php include 'php/footer.php'; ?>
