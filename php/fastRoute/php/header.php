@@ -28,8 +28,8 @@
                 <li class="nav-item"><a class="nav-link" href="spedizione.php">Registra Spedizione</a></li>
                 <li class="nav-item"><a class="nav-link" href="consegna.php">Registra Consegna</a></li>
                 <li class="nav-item"><a class="nav-link" href="ritiro.php">Registra Ritiro</a></li>
-                <li class="nav-item"><a class="nav-link" href="stato_plico.php">Stato Plico</a></li>
-                <li class="nav-item"><a class="nav-link" href="dashboard.php">Dashboard Spedizioni</a></li>
+                <li class="nav-item"><a class="nav-link" href="stato_plico.php">Modifica Stato Plico</a></li>
+                <li class="nav-item"><a class="nav-link" href="dashboard.php">Visualizza Spedizioni</a></li>
             </ul>
         </div>
     </div>

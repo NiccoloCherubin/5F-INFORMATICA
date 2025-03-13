@@ -1,0 +1,93 @@
+/* Stile generale */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #acb6e5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Contenitore del form */
+form {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    text-align: left;
+}
+
+/* Titolo */
+h2 {
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+}
+
+/* Stile per i gruppi di input */
+div {
+    margin-bottom: 15px;
+}
+
+/* Stile per le etichette */
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+/* Campi di input */
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Effetto focus sugli input */
+input:focus {
+    border-color: #74ebd5;
+    outline: none;
+    box-shadow: 0 0 5px rgba(116, 235, 213, 0.7);
+}
+
+/* RADIO BUTTONS & CHECKBOXES */
+.radio-group,
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Allinea il testo vicino al bottone */
+.radio-group label,
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+    cursor: pointer;
+    gap: 6px;
+}
+
+/* Stile del bottone */
+button {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease-in-out;
+}
+
+button:hover {
+    background: #218838;
+}

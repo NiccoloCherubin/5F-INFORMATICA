@@ -59,12 +59,14 @@ CREATE TABLE Destinatari (
 -- Tabella SPEDIRE (associa Clienti e Plichi)
 CREATE TABLE Spedire (
     Clienti_id INT NOT NULL,
-    Plichi_id INT NOT NULL UNIQUE,
+    Plichi_id INT NOT NULL,
     data DATETIME NOT NULL,
     PRIMARY KEY (Clienti_id, Plichi_id),
     FOREIGN KEY (Clienti_id) REFERENCES Clienti(id) ON DELETE CASCADE,
     FOREIGN KEY (Plichi_id) REFERENCES Plichi(id) ON DELETE CASCADE
 );
+
+
 
 -- Tabella INVIARE (associa Plichi e Sedi di partenza)
 CREATE TABLE Inviare (
@@ -122,14 +124,11 @@ INSERT INTO Stati (descrizione) VALUES
 ('Consegnato');
 
 INSERT INTO Personale (nome, mail, password, Ruoli_id) VALUES 
-('Mario Rossi', 'mario.rossi@fastroute.com', '$2y$10$lsVEdSgwzqKE5gFeeO8d3O.piZ1.qVJVrIsdm0Vge7ygqBE8s7dQu',1),
-('Luca Bianchi', 'luca.bianchi@fastroute.com', '$2y$10$8GgZkreYa3swmaagc52T7uW.P5t2tp/HHHdhyB1VzVMNn3hPI1c1O',2),
-('Anna Verdi', 'anna.verdi@fastroute.com', '$2y$10$Sq5mY8lEq9gDcbbLEvCnPe7ooMVhNH0Zp2bcasKTnBKqgBOzJKrZi',3);
+('Prova', 'prova.prova@fastroute.com', '$2y$10$kIk7Mr3jXh9sV94.mNm7JOtJ0wPRVHaYbdwgoL6QYvA6EOTOpncWi',1);
 
 INSERT INTO Clienti (nome, cognome, indirizzo, passw) VALUES 
-('Giovanni', 'Esposito', 'Via Roma 10, Napoli', '$2y$10$ev58.YHizmB5Ymo7M2Mr/eqZzO//rP6bFHtYIuWk11lyHNU7UGS9W'),
-('Laura', 'Ferrari', 'Corso Vittorio 25, Milano', '$2y$10$qyVfApUump07MEI0naiS7uzrZVydobUEa.CWzFzhQTXmUk8i2OQSi'),
-('Stefano', 'Russo', 'Piazza Garibaldi 3, Roma', '$2y$10$djT1UuiL6kULVW2wIvg3I.ZUszEb1rzX84UuxvqqgTDkY/5zuVXDG');
+('Giovanni', 'Esposito', 'Via Roma 10, Napoli', '$2y$10$VavE.DUH/PG84NqRbIA8nuIy7aG5p/F3R8lZjN7/BMAZevltsM4I.');
+
 
 INSERT INTO Destinatari (nome, indirizzo) VALUES 
 ('Marco Neri', 'Via Torino 50, Milano'),
@@ -165,3 +164,4 @@ INSERT INTO Lavorare (personale_id, Sedi_id) VALUES
 (1, 1),
 (2, 2),
 (3, 3);
+
