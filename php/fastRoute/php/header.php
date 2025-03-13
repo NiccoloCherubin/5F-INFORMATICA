@@ -24,13 +24,35 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
+                <!-- Pagina di login per il personale -->
                 <li class="nav-item"><a class="nav-link" href="login.php">Login Personale</a></li>
-                <li class="nav-item"><a class="nav-link" href="spedizione.php">Registra Spedizione</a></li>
-                <li class="nav-item"><a class="nav-link" href="consegna.php">Registra Consegna</a></li>
+
+                <!-- Pagina per la gestione dei plichi:
+                     - Registra una spedizione (associa plico al cliente e sede di partenza)
+                     - Registra una consegna (aggiorna lo stato del plico) -->
+                <li class="nav-item"><a class="nav-link" href="gestione_plichi.php">Gestione Plichi</a></li>
+
+                <!-- Pagina per registrare il ritiro di un plico da parte del destinatario -->
                 <li class="nav-item"><a class="nav-link" href="ritiro.php">Registra Ritiro</a></li>
-                <li class="nav-item"><a class="nav-link" href="stato_plico.php">Modifica Stato Plico</a></li>
-                <li class="nav-item"><a class="nav-link" href="dashboard.php">Visualizza Spedizioni</a></li>
+
+                <!-- Dashboard per visualizzare tutte le spedizioni con dettagli:
+                     - Mittente, destinatario, stato attuale, date di consegna/spedizione/ritiro
+                     - Ricerca e filtri per monitorare le spedizioni negli ultimi N giorni -->
+                <li class="nav-item"><a class="nav-link" href="dashboard.php">Dashboard Spedizioni</a></li>
+
+                <!-- Pagina per la gestione del personale (solo per responsabili):
+                     - Aggiungere/modificare dipendenti
+                     - Cambiare password e ruoli -->
+                <li class="nav-item"><a class="nav-link" href="gestione_personale.php">Gestione Personale</a></li>
+
+                <!-- Pagina del profilo personale:
+                     - Cambiare password
+                     - Selezionare il tema grafico preferito (scelta salvata per sessioni future)
+                     - Salvare le credenziali per accesso automatico -->
+                <li class="nav-item"><a class="nav-link" href="profilo.php">Profilo</a></li>
             </ul>
         </div>
     </div>
 </nav>
+
+
