@@ -23,11 +23,11 @@ $query = "
         i.data AS data_spedizione, 
         rr.data AS data_consegna
     FROM Plichi p
-    JOIN Spedire sp ON sp.Plichi_id = p.id
-    JOIN Clienti c ON c.id = sp.Clienti_id
-    JOIN Ritirare r ON r.Plichi_id = p.id
-    JOIN Destinatari d ON d.id = r.Destinatari_id
-    JOIN Stati s ON s.id = p.Stati_id
+    LEFT JOIN Spedire sp ON sp.Plichi_id = p.id
+    LEFT JOIN Clienti c ON c.id = sp.Clienti_id
+    LEFT JOIN Ritirare r ON r.Plichi_id = p.id
+    LEFT JOIN Destinatari d ON d.id = r.Destinatari_id
+    LEFT JOIN Stati s ON s.id = p.Stati_id
     LEFT JOIN Inviare i ON i.Plichi_id = p.id  -- Data di spedizione
     LEFT JOIN Ricevere rr ON rr.Plichi_id = p.id  -- Data di consegna
     ORDER BY p.id DESC

@@ -165,25 +165,4 @@ INSERT INTO Lavorare (personale_id, Sedi_id) VALUES
 
 
 
-SELECT 
-    p.id AS plico_id, 
-    c.nome AS mittente_nome, 
-    c.cognome AS mittente_cognome, 
-    d.nome AS destinatario_nome, 
-    d.cognome AS destinatario_cognome, 
-    s.descrizione AS stato_plico, 
-    r.data AS data_ritiro, 
-    i.data AS data_spedizione, 
-    rr.data AS data_consegna
-FROM Plichi p
-JOIN Spedire sp ON sp.Plichi_id = p.id
-JOIN Clienti c ON c.id = sp.Clienti_id
-JOIN Ritirare r ON r.Plichi_id = p.id
-JOIN Destinatari d ON d.id = r.Destinatari_id  -- Modificato: ora correttamente unito tramite Destinatari_id
-JOIN Stati s ON s.id = p.Stati_id
-JOIN Inviare i ON i.Plichi_id = p.id
-JOIN Ricevere rr ON rr.Plichi_id = p.id
-ORDER BY p.id DESC;
-
-
 
