@@ -53,7 +53,8 @@ CREATE TABLE Plichi (
 CREATE TABLE Destinatari (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
-    indirizzo VARCHAR(255) NOT NULL
+    indirizzo VARCHAR(255) NOT null,
+    cognome varchar(50) not null
 );
 
 -- Tabella SPEDIRE (associa Clienti e Plichi)
@@ -130,10 +131,10 @@ INSERT INTO Clienti (nome, cognome, indirizzo, passw) VALUES
 ('Giovanni', 'Esposito', 'Via Roma 10, Napoli', '$2y$10$VavE.DUH/PG84NqRbIA8nuIy7aG5p/F3R8lZjN7/BMAZevltsM4I.');
 
 
-INSERT INTO Destinatari (nome, indirizzo) VALUES 
-('Marco Neri', 'Via Torino 50, Milano'),
-('Chiara Galli', 'Viale Venezia 12, Roma'),
-('Francesco Moretti', 'Piazza Dante 7, Napoli');
+INSERT INTO Destinatari (nome, cognome,indirizzo) VALUES 
+('Marco', 'Neri', 'Via Torino 50, Milano'),
+('Chiara' ,'Galli', 'Viale Venezia 12, Roma'),
+('Francesco','Moretti', 'Piazza Dante 7, Napoli');
 
 INSERT INTO Plichi (data_ritiro, Stati_id) VALUES 
 ('2025-03-10 10:30:00', 1),
@@ -141,9 +142,8 @@ INSERT INTO Plichi (data_ritiro, Stati_id) VALUES
 ('2025-03-12 09:15:00', 3);
 
 INSERT INTO Spedire (Clienti_id, Plichi_id, data) VALUES 
-(1, 1, '2025-03-10 10:35:00'),
-(2, 2, '2025-03-11 15:10:00'),
-(3, 3, '2025-03-12 09:20:00');
+(1, 1, '2025-03-10 10:35:00');
+
 
 INSERT INTO Inviare (Plichi_id, Sedi_id, data) VALUES 
 (1, 1, '2025-03-10 12:00:00'),
@@ -161,7 +161,29 @@ INSERT INTO Ritirare (Plichi_id, Destinatari_id, data, data_conferma) VALUES
 (3, 3, '2025-03-13 17:00:00', '2025-03-13 17:05:00');
 
 INSERT INTO Lavorare (personale_id, Sedi_id) VALUES 
-(1, 1),
-(2, 2),
-(3, 3);
+(1, 1);
+
+
+
+SELECT 
+    p.id AS plico_id, 
+    c.nome AS mittente_nome, 
+    c.cognome AS mittente_cognome, 
+    d.nome AS destinatario_nome, 
+    d.cognome AS destinatario_cognome, 
+    s.descrizione AS stato_plico, 
+    r.data AS data_ritiro, 
+    i.data AS data_spedizione, 
+    rr.data AS data_consegna
+FROM Plichi p
+JOIN Spedire sp ON sp.Plichi_id = p.id
+JOIN Clienti c ON c.id = sp.Clienti_id
+JOIN Ritirare r ON r.Plichi_id = p.id
+JOIN Destinatari d ON d.id = r.Destinatari_id  -- Modificato: ora correttamente unito tramite Destinatari_id
+JOIN Stati s ON s.id = p.Stati_id
+JOIN Inviare i ON i.Plichi_id = p.id
+JOIN Ricevere rr ON rr.Plichi_id = p.id
+ORDER BY p.id DESC;
+
+
 
