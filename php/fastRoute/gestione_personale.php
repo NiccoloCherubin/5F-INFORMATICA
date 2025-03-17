@@ -1,5 +1,5 @@
 <?php
-// Includiamo la classe Database
+
 include_once 'php/Database.php';
 
 session_start(); // Gestione della sessione per il login

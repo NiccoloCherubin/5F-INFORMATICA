@@ -125,7 +125,7 @@ INSERT INTO Stati (descrizione) VALUES
 ('Consegnato');
 
 INSERT INTO Personale (nome, mail, password, Ruoli_id) VALUES 
-('Prova', 'prova.prova@fastroute.com', '$2y$10$kIk7Mr3jXh9sV94.mNm7JOtJ0wPRVHaYbdwgoL6QYvA6EOTOpncWi',1);
+('Prova', 'prova.prova@fastroute.com', '$2y$10$kIk7Mr3jXh9sV94.mNm7JOtJ0wPRVHaYbdwgoL6QYvA6EOTOpncWi',1); -- prova
 
 INSERT INTO Clienti (nome, cognome, indirizzo, passw) VALUES 
 ('Giovanni', 'Esposito', 'Via Roma 10, Napoli', '$2y$10$VavE.DUH/PG84NqRbIA8nuIy7aG5p/F3R8lZjN7/BMAZevltsM4I.');
@@ -162,7 +162,3 @@ INSERT INTO Ritirare (Plichi_id, Destinatari_id, data, data_conferma) VALUES
 
 INSERT INTO Lavorare (personale_id, Sedi_id) VALUES 
 (1, 1);
-
-
-
-

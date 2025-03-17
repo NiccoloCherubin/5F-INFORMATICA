@@ -20,7 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (password_verify($password, $user->password)) {
                 $_SESSION['user_id'] = $user->id;
                 $_SESSION['user_name'] = $user->nome;
-                header("Location: dashboard.php");
+                $_SESSION['ruolo_id'] = $user->ruolo_id;
+                header("Location: profilo.php");
                 exit();
             } else {
                 $error = "Credenziali non valide.";
