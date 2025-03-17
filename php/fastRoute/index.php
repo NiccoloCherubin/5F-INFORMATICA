@@ -7,7 +7,6 @@
     <img src="immagini/corriere.png" alt="Immagine di un corriere" class="img-fluid rounded shadow mt-4">
 </main>
 <?php
-echo password_hash('prova2', PASSWORD_DEFAULT) . "<br>";
 ?>
 
 <?php include 'php/footer.php'; ?>

@@ -1,27 +1,28 @@
 <?php
-// Includiamo la classe Database
 include_once 'php/Database.php';
+include_once 'mail.php';
+session_start();
 
-session_start(); // Gestione della sessione per il login
-
-// Verifica se l'utente è autenticato come personale
+// Verifica se l'utente è autenticato; in caso contrario, redirige al login
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php'); // Se non è autenticato, redirige alla pagina di login
+    header('Location: login.php');
     exit();
 }
 
-$messaggio = '';
-$plichi = []; // Array per memorizzare i plichi disponibili per il ritiro
+$message = '';
+$error   = '';
 
-// Recupera tutti i plichi in stato "In attesa" o "In transito" (stato 1 o 2)
-try {
-    $plichi = Database::select("
+// Funzione per recuperare i plichi in stato "In attesa" o "In transito"
+// In questo caso la query mantiene anche le informazioni del cliente per eventuali necessità
+function loadPlichi() {
+    return Database::select("
         SELECT 
             p.id AS plico_id, 
-            c.nome AS mittente_nome, 
-            c.cognome AS mittente_cognome, 
+            c.nome AS cliente_nome, 
+            c.cognome AS cliente_cognome,
+            c.mail AS client_mail,
             d.nome AS destinatario_nome,  
-            d.cognome AS destinatario_cognome, 
+            d.cognome AS destinatario_cognome,
             s.descrizione AS stato_plico,
             p.data_ritiro
         FROM Plichi p
@@ -33,8 +34,12 @@ try {
         WHERE p.Stati_id IN (1, 2)
         ORDER BY p.id DESC
     ");
-} catch (Exception $e) {
-    $errore = "Errore nel recupero dei plichi: " . $e->getMessage();
+}
+
+try {
+    $plichi = loadPlichi();
+} catch (Exception $ex) {
+    $error = "Errore nel recupero dei plichi: " . $ex->getMessage();
 }
 
 // Gestione del form di ritiro
@@ -45,6 +50,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $plico_id = $_POST['plico_id'];
 
+        // Recupera l'indirizzo email del cliente associato al plico
+        $stmt = $pdo->prepare("
+            SELECT c.mail AS client_mail
+            FROM Spedire sp
+            JOIN Clienti c ON c.id = sp.Clienti_id
+            WHERE sp.Plichi_id = :plico_id
+        ");
+        $stmt->execute(['plico_id' => $plico_id]);
+        $client = $stmt->fetch();
+        if (!$client) {
+            throw new Exception("Cliente non trovato per il plico $plico_id");
+        }
+        $clientEmail = $client->client_mail;
+
         // Aggiorna lo stato del plico a "Consegnato" (stato 3)
         $stmt = $pdo->prepare("UPDATE Plichi SET Stati_id = 3 WHERE id = :plico_id");
         $stmt->execute(['plico_id' => $plico_id]);
@@ -54,30 +73,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute(['plico_id' => $plico_id]);
 
         $pdo->commit();
-        $messaggio = "Ritiro registrato con successo!";
+        $message = "Ritiro registrato con successo!";
 
-        // Aggiorna la lista dei plichi disponibili
-        $plichi = Database::select("
-            SELECT 
-                p.id AS plico_id, 
-                c.nome AS mittente_nome, 
-                c.cognome AS mittente_cognome, 
-                d.nome AS destinatario_nome,  
-                d.cognome AS destinatario_cognome, 
-                s.descrizione AS stato_plico,
-                p.data_ritiro
-            FROM Plichi p
-            JOIN Spedire sp ON sp.Plichi_id = p.id
-            JOIN Clienti c ON c.id = sp.Clienti_id
-            JOIN Ritirare r ON r.Plichi_id = p.id
-            JOIN Destinatari d ON d.id = r.Destinatari_id
-            JOIN Stati s ON s.id = p.Stati_id
-            WHERE p.Stati_id IN (1, 2)
-            ORDER BY p.id DESC
-        ");
+        // Invia l'email al cliente per confermare la consegna del plico
+        $subject = "Conferma Consegna Plico - FastRoute";
+        $body = "Gentile cliente, il suo plico con ID $plico_id è stato registrato come consegnato. Grazie per aver scelto FastRoute.";
+        if (!sendMail($clientEmail, $subject, $body)) {
+            error_log("Errore invio email a $clientEmail per il plico $plico_id");
+        }
+
+        // Ricarica la lista dei plichi dopo l'aggiornamento
+        $plichi = loadPlichi();
     } catch (Exception $e) {
         $pdo->rollBack();
-        $messaggio = "Errore durante la registrazione del ritiro: " . $e->getMessage();
+        $error = "Errore durante la registrazione del ritiro: " . $e->getMessage();
     }
 }
 ?>
@@ -97,9 +106,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h2>Registra Ritiro Plico</h2>
     <p class="lead">Completa il ritiro di un plico da parte del destinatario.</p>
 
-    <?php if (!empty($messaggio)): ?>
-        <div class="alert <?php echo strpos($messaggio, 'Errore') !== false ? 'alert-danger' : 'alert-success'; ?>">
-            <?php echo htmlspecialchars($messaggio); ?>
+    <?php if ($message): ?>
+        <div class="alert alert-success">
+            <?php echo $message; ?>
+        </div>
+    <?php endif; ?>
+    <?php if ($error): ?>
+        <div class="alert alert-danger">
+            <?php echo $error; ?>
         </div>
     <?php endif; ?>
 
@@ -112,16 +126,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <select name="plico_id" id="plico_id" class="form-select" required>
                     <option value="">-- Seleziona un plico --</option>
                     <?php foreach ($plichi as $plico): ?>
-                        <option value="<?php echo htmlspecialchars($plico->plico_id); ?>">
-                            ID: <?php echo htmlspecialchars($plico->plico_id); ?> -
-                            Destinatario: <?php echo htmlspecialchars($plico->destinatario_nome . ' ' . $plico->destinatario_cognome); ?> -
-                            Mittente: <?php echo htmlspecialchars($plico->mittente_nome . ' ' . $plico->mittente_cognome); ?> -
-                            Stato: <?php echo htmlspecialchars($plico->stato_plico); ?>
+                        <option value="<?php echo $plico->plico_id; ?>">
+                            ID: <?php echo $plico->plico_id; ?> -
+                            Cliente: <?php echo $plico->cliente_nome . ' ' . $plico->cliente_cognome; ?> -
+                            Stato: <?php echo $plico->stato_plico; ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
             </div>
 
+            <!-- Campo Note (opzionale); non viene salvato nel database -->
             <div class="mb-3">
                 <label for="note" class="form-label">Note (opzionale)</label>
                 <textarea name="note" id="note" class="form-control" rows="3"></textarea>
@@ -143,8 +157,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <thead>
                 <tr>
                     <th>ID Plico</th>
+                    <th>Cliente</th>
                     <th>Destinatario</th>
-                    <th>Mittente</th>
                     <th>Stato</th>
                     <th>Data Ritiro</th>
                     <th>Azioni</th>
@@ -153,14 +167,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <tbody>
                 <?php foreach ($plichi as $plico): ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($plico->plico_id); ?></td>
-                        <td><?php echo htmlspecialchars($plico->destinatario_nome . ' ' . $plico->destinatario_cognome); ?></td>
-                        <td><?php echo htmlspecialchars($plico->mittente_nome . ' ' . $plico->mittente_cognome); ?></td>
-                        <td><?php echo htmlspecialchars($plico->stato_plico); ?></td>
-                        <td><?php echo htmlspecialchars($plico->data_ritiro); ?></td>
+                        <td><?php echo $plico->plico_id; ?></td>
+                        <td><?php echo $plico->cliente_nome . ' ' . $plico->cliente_cognome; ?></td>
+                        <td><?php echo $plico->destinatario_nome . ' ' . $plico->destinatario_cognome; ?></td>
+                        <td><?php echo $plico->stato_plico; ?></td>
+                        <td><?php echo $plico->data_ritiro; ?></td>
                         <td>
                             <form method="post" style="display: inline;">
-                                <input type="hidden" name="plico_id" value="<?php echo htmlspecialchars($plico->plico_id); ?>">
+                                <input type="hidden" name="plico_id" value="<?php echo $plico->plico_id; ?>">
                                 <button type="submit" class="btn btn-sm btn-success">Conferma Ritiro</button>
                             </form>
                         </td>
@@ -173,7 +187,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <?php include 'php/footer.php'; ?>
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
