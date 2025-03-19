@@ -29,6 +29,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="bundle.php">Bundles</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.php">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profilo.php">Profilo</a>
+                </li>
             </ul>
         </div>
         <a href="carrello.php" class="navbar-brand ms-auto">
