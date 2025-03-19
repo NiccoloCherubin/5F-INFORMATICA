@@ -14,24 +14,24 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">SITO</a>
+        <a class="navbar-brand" href="index.php">SITO</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                    <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="archivioProdotti.html">Tutti i prodotti</a>
+                    <a class="nav-link" href="prodotti.php">Tutti i prodotti</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="bundle.html">Bundles</a>
+                    <a class="nav-link" href="bundle.php">Bundles</a>
                 </li>
             </ul>
         </div>
-        <a href="carrello.html" class="navbar-brand ms-auto">
+        <a href="carrello.php" class="navbar-brand ms-auto">
             <i class="bi bi-cart-fill" style="font-size: 1.5rem;"></i> <!-- Icona del carrello -->
         </a>
     </div>
