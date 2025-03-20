@@ -6,7 +6,7 @@ create table utopia.sovrani(
 nome varchar(100) primary key,
 data_inizio date not null,
 data_fine date not null,
-immagine BIGINT UNSIGNED, -- per nome immagine che viene rinominata da php
+immagine int, 
 estensione varchar(5),
 sovrano_precedente varchar(100),
 sovrano_successivo varchar(100),
