@@ -6,6 +6,7 @@ CREATE TABLE Clienti (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,
+    mail varchar(50) not null unique,
     indirizzo VARCHAR(255) NOT NULL,
     passw VARCHAR(255) NOT NULL,  -- Deve essere salvata in forma hashata
     data_uso_punteggio DATETIME
@@ -127,8 +128,8 @@ INSERT INTO Stati (descrizione) VALUES
 INSERT INTO Personale (nome, mail, password, Ruoli_id) VALUES 
 ('Prova', 'prova.prova@fastroute.com', '$2y$10$kIk7Mr3jXh9sV94.mNm7JOtJ0wPRVHaYbdwgoL6QYvA6EOTOpncWi',1); -- prova
 
-INSERT INTO Clienti (nome, cognome, indirizzo, passw) VALUES 
-('Giovanni', 'Esposito', 'Via Roma 10, Napoli', '$2y$10$VavE.DUH/PG84NqRbIA8nuIy7aG5p/F3R8lZjN7/BMAZevltsM4I.');
+INSERT INTO Clienti (nome, cognome, mail,indirizzo, passw) VALUES 
+('Emiliano', 'Spiller', 'matteo.fuso@iisviolamarchesini.edu.it','Via Teano 14', '$2y$10$VavE.DUH/PG84NqRbIA8nuIy7aG5p/F3R8lZjN7/BMAZevltsM4I.');
 
 
 INSERT INTO Destinatari (nome, cognome,indirizzo) VALUES 
@@ -162,3 +163,5 @@ INSERT INTO Ritirare (Plichi_id, Destinatari_id, data, data_conferma) VALUES
 
 INSERT INTO Lavorare (personale_id, Sedi_id) VALUES 
 (1, 1);
+
+

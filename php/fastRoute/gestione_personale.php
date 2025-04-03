@@ -3,13 +3,13 @@
 include_once 'php/Database.php';
 
 session_start(); // Gestione della sessione per il login
-
+/*
 // Verifica se l'utente è autenticato e se è un responsabile (ruolo_id = 1)
 if (!isset($_SESSION['user_id']) || $_SESSION['ruolo_id'] != 1) {
     // Se non è autenticato o non è un responsabile, redirige alla pagina di login
     header('Location: login.php?error=unauthorized');
     exit();
-}
+}*/
 
 $messaggio = '';
 $personale = [];
