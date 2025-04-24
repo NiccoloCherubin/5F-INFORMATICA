@@ -28,7 +28,7 @@ $href=$appConfig['baseURL'].$appConfig['prjName'].$appConfig['css'];
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <!-- Pagina di login per il personale -->
-                <li class="nav-item"><a class="nav-link" href="login">Login Personale</a></li>
+                <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
             </ul>
         </div>
     </div>
