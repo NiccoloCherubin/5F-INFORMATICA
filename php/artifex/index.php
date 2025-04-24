@@ -14,6 +14,10 @@ require 'Router/Router.php';
 $routerClass = new \Router\Router();
 $routerClass->addRoute('GET','home/index','HomeController','presentation1');
 $routerClass->addRoute('GET','home/login','LoginController','loginAction');
+$routerClass->addRoute('POST','home/login','LoginController','processLogin');
+$routerClass->addRoute('GET', 'home/profilo', 'LoginController', 'profilo');
+
+
 
 $reValue=$routerClass->match($url,$method);
 if(empty($reValue)) {
@@ -24,5 +28,5 @@ $controller= 'App\Controller\\'.$reValue['controller'];
 $action = $reValue['action'];
 
 require $controller.'.php';
-$controllerObj = new $controller($db);
-$controllerObj->$action();
+$controllerObj = new $controller();
+$controllerObj->$action($db);

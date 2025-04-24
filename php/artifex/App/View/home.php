@@ -8,6 +8,5 @@ require 'header.php';
         <p class="lead">Scopri l'Italia con le nostre visite guidate esclusive in lingua!</p>
     </div>
 </div>
-<?php
-require 'footer.php';
+<?php require 'footer.php';
 ?>

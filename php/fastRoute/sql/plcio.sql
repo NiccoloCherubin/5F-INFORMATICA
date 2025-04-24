@@ -1,167 +1,146 @@
-create DATABASE FastRoute;
-USE FastRoute;
+create database artifex;
 
--- Tabella Clienti
-CREATE TABLE Clienti (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(50) NOT NULL,
-    cognome VARCHAR(50) NOT NULL,
-    mail varchar(50) not null unique,
-    indirizzo VARCHAR(255) NOT NULL,
-    passw VARCHAR(255) NOT NULL,  -- Deve essere salvata in forma hashata
-    data_uso_punteggio DATETIME
+create table artifex.luoghi(
+id int primary key auto_increment,
+descrizione varchar(50) not null unique
 );
 
--- Tabella Ruoli
-CREATE TABLE Ruoli (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    descrizione VARCHAR(50) UNIQUE NOT NULL
+create table artifex.eventi(
+id int primary key auto_increment,
+descrizione varchar(50) not null unique
 );
 
--- Tabella PERSONALE
-CREATE TABLE Personale (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(50) NOT NULL,
-    mail VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,  -- Anche qui salvata in forma sicura
-    Ruoli_id INT NOT NULL,
-    FOREIGN KEY (Ruoli_id) REFERENCES Ruoli(id) ON DELETE CASCADE
+create table artifex.nazionalita(
+id int primary key auto_increment,
+descrizione varchar(50) not null unique
 );
 
--- Tabella Sedi
-CREATE TABLE Sedi (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    descrizione VARCHAR(100) NOT NULL,
-    citta VARCHAR(50) NOT NULL
-);
-
--- Tabella Stati del Plichi
-CREATE TABLE Stati (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    descrizione VARCHAR(50) UNIQUE NOT NULL
-);
-
--- Tabella Plichi
-CREATE TABLE Plichi (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    data_ritiro DATETIME NOT NULL,
-    Stati_id INT NOT NULL,
-    FOREIGN KEY (Stati_id) REFERENCES Stati(id) ON DELETE CASCADE
-);
-
-
--- Tabella Destinatari
-CREATE TABLE Destinatari (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(50) NOT NULL,
-    indirizzo VARCHAR(255) NOT null,
-    cognome varchar(50) not null
-);
-
--- Tabella SPEDIRE (associa Clienti e Plichi)
-CREATE TABLE Spedire (
-    Clienti_id INT NOT NULL,
-    Plichi_id INT NOT NULL,
-    data DATETIME NOT NULL,
-    PRIMARY KEY (Clienti_id, Plichi_id),
-    FOREIGN KEY (Clienti_id) REFERENCES Clienti(id) ON DELETE CASCADE,
-    FOREIGN KEY (Plichi_id) REFERENCES Plichi(id) ON DELETE CASCADE
+create table artifex.lingue(
+id int primary key auto_increment,
+descrizione varchar(50) not null unique
 );
 
 
 
--- Tabella INVIARE (associa Plichi e Sedi di partenza)
-CREATE TABLE Inviare (
-    Plichi_id INT NOT NULL,
-    Sedi_id INT NOT NULL,
-    data DATETIME NOT NULL,
-    PRIMARY KEY (Plichi_id, Sedi_id),
-    FOREIGN KEY (Plichi_id) REFERENCES Plichi(id) ON DELETE CASCADE,
-    FOREIGN KEY (Sedi_id) REFERENCES Sedi(id) ON DELETE CASCADE
+create table artifex.utenti(
+id int primary key auto_increment,
+nome varchar(50) not null,
+telefono char(9) not null unique,
+mail varchar(100) not null unique,
+id_nazionalita int not null,
+id_lingua int not null,
+password varchar(100) not null,
+foreign key (id_nazionalita) references artifex.nazionalita(id),
+foreign key (id_lingua) references artifex.lingue(id)
 );
 
--- Tabella RICEVERE (associa Plichi e Sedi di arrivo)
-CREATE TABLE Ricevere (
-    Plichi_id INT NOT NULL,
-    Sedi_id INT NOT NULL,
-    data DATETIME NOT NULL,
-    PRIMARY KEY (Plichi_id, Sedi_id),
-    FOREIGN KEY (Plichi_id) REFERENCES Plichi(id) ON DELETE CASCADE,
-    FOREIGN KEY (Sedi_id) REFERENCES Sedi(id) ON DELETE CASCADE
+create table artifex.guide(
+id int primary key auto_increment,
+nome varchar(50) not null,
+cognome varchar(50) not null,
+titolo_studio varchar(50) not null,
+data_nascita date not null
 );
 
--- Tabella RITIRARE (associa Destinatari e Plichi)
-CREATE TABLE Ritirare (
-    Plichi_id INT NOT NULL UNIQUE,
-    Destinatari_id INT NOT NULL,
-    data DATETIME NOT NULL,
-    data_conferma DATETIME DEFAULT NULL, -- Per la mail al mittente
-    PRIMARY KEY (Plichi_id, Destinatari_id),
-    FOREIGN KEY (Plichi_id) REFERENCES Plichi(id) ON DELETE CASCADE,
-    FOREIGN KEY (Destinatari_id) REFERENCES Destinatari(id) ON DELETE CASCADE
+create table artifex.visite(
+id int primary key auto_increment,
+titolo varchar(50) not null unique,
+durata decimal(5,2) not null,
+prezzo decimal(7,2) not null,
+n_min int not null check(n_min > 0),
+n_max int not null check(n_max > n_min),
+id_guida int not null,
+foreign key (id_guida) references artifex.guide(id)
 );
 
--- Tabella LAVORARE (associa Personale e Sedi)
-CREATE TABLE Lavorare (
-    personale_id INT NOT NULL,
-    Sedi_id INT NOT NULL,
-    PRIMARY KEY (personale_id, Sedi_id),
-    FOREIGN KEY (personale_id) REFERENCES Personale(id) ON DELETE CASCADE,
-    FOREIGN KEY (Sedi_id) REFERENCES Sedi(id) ON DELETE CASCADE
+-- relazione tra utente e visita
+create table artifex.prenotare(
+id_utente int not null,
+id_visita int not null,
+foreign key (id_utente) references artifex.utenti(id),
+foreign key (id_visita) references artifex.visite(id),
+primary key(id_utente,id_visita)
 );
 
-INSERT INTO Ruoli (descrizione) VALUES 
-('Responsabile'),
-('Addetto Spedizioni'),
-('Addetto Consegne');
+-- relazione tra guida e lingua
+create table artifex.parlare(
+id_guida int not null,
+id_lingua int not null,
+foreign key (id_guida) references artifex.guide(id),
+foreign key (id_lingua) references artifex.lingue(id),
+primary key(id_guida,id_lingua)
+);
 
-INSERT INTO Sedi (descrizione, citta) VALUES 
-('Sedi Centrale', 'Roma'),
-('Filiale Nord', 'Milano'),
-('Filiale Sud', 'Napoli');
+-- relazione tra visita, luogo e evento
+create table artifex.avere(
+id_visita int not null,
+id_luogo int not null,
+id_evento int not null,
+foreign key (id_visita) references artifex.visite(id),
+foreign key (id_luogo) references artifex.luoghi(id),
+foreign key (id_evento) references artifex.eventi(id),
+primary key(id_visita,id_luogo,id_evento)
+);
 
-INSERT INTO Stati (descrizione) VALUES 
-('In attesa'),
-('In transito'),
-('Consegnato');
+INSERT INTO artifex.lingue (descrizione) VALUES 
+('Italiano'), 
+('Inglese'), 
+('Francese'), 
+('Tedesco');
 
-INSERT INTO Personale (nome, mail, password, Ruoli_id) VALUES 
-('Prova', 'prova.prova@fastroute.com', '$2y$10$kIk7Mr3jXh9sV94.mNm7JOtJ0wPRVHaYbdwgoL6QYvA6EOTOpncWi',1); -- prova
+INSERT INTO artifex.nazionalita (descrizione) VALUES 
+('Italiana'), 
+('Statunitense'), 
+('Francese'), 
+('Tedesca');
 
-INSERT INTO Clienti (nome, cognome, mail,indirizzo, passw) VALUES 
-('Emiliano', 'Spiller', 'matteo.fuso@iisviolamarchesini.edu.it','Via Teano 14', '$2y$10$VavE.DUH/PG84NqRbIA8nuIy7aG5p/F3R8lZjN7/BMAZevltsM4I.');
+INSERT INTO artifex.luoghi (descrizione) VALUES 
+('Roma - Colosseo'), 
+('Firenze - Galleria degli Uffizi'), 
+('Pompei - Scavi Archeologici'), 
+('Venezia - Palazzo Ducale');
 
+INSERT INTO artifex.eventi (descrizione) VALUES 
+('Mattina'), 
+('Pomeriggio'), 
+('Visita serale'), 
+('Speciale weekend');
 
-INSERT INTO Destinatari (nome, cognome,indirizzo) VALUES 
-('Marco', 'Neri', 'Via Torino 50, Milano'),
-('Chiara' ,'Galli', 'Viale Venezia 12, Roma'),
-('Francesco','Moretti', 'Piazza Dante 7, Napoli');
+INSERT INTO artifex.utenti (nome, telefono, mail, password,id_nazionalita, id_lingua) VALUES 
+('Mario Rossi', '333112233', 'mario.rossi@email.it', '$2y$10$jaB6lmKaCSQ/N2Jhxm1R5Ouq/LI9aiux.l33DmPDlaQ.SXe6BU78S', 1, 1),
+('Anna Smith', '333223344', 'anna.smith@email.com', '$2y$10$jaB6lmKaCSQ/N2Jhxm1R5Ouq/LI9aiux.l33DmPDlaQ.SXe6BU78S', 2, 2),
+('Claire Dubois', '333334455', 'claire.dubois@email.fr', '$2y$10$jaB6lmKaCSQ/N2Jhxm1R5Ouq/LI9aiux.l33DmPDlaQ.SXe6BU78S', 3, 3),
+('Hans Müller', '333445566', 'hans.mueller@email.de', '$2y$10$jaB6lmKaCSQ/N2Jhxm1R5Ouq/LI9aiux.l33DmPDlaQ.SXe6BU78S', 4, 4);
 
-INSERT INTO Plichi (data_ritiro, Stati_id) VALUES 
-('2025-03-10 10:30:00', 1),
-('2025-03-11 15:00:00', 2),
-('2025-03-12 09:15:00', 3);
+INSERT INTO artifex.guide (nome, cognome, titolo_studio, data_nascita) VALUES 
+('Luca', 'Bianchi', 'Laurea in Storia dell’Arte', '1985-05-12'),
+('Sara', 'Verdi', 'Laurea in Archeologia', '1990-08-22'),
+('Paul', 'Moreau', 'Laurea in Lettere', '1982-03-18');
 
-INSERT INTO Spedire (Clienti_id, Plichi_id, data) VALUES 
-(1, 1, '2025-03-10 10:35:00');
+INSERT INTO artifex.parlare (id_guida, id_lingua) VALUES 
+(1, 1), -- Luca parla Italiano
+(1, 2), -- Luca parla Inglese
+(2, 1), -- Sara parla Italiano
+(2, 3), -- Sara parla Francese
+(3, 3), -- Paul parla Francese
+(3, 2); -- Paul parla Inglese
 
+INSERT INTO artifex.visite (titolo, durata, prezzo, n_min, n_max, id_guida) VALUES 
+('Galleria degli Uffizi', 2.5, 25.00, 5, 20, 1),
+('Scavi di Pompei', 3.0, 30.00, 10, 30, 2),
+('Colosseo e Foro Romano', 2.0, 20.00, 5, 25, 1),
+('Palazzo Ducale di Venezia', 1.5, 18.00, 4, 15, 3);
 
-INSERT INTO Inviare (Plichi_id, Sedi_id, data) VALUES 
-(1, 1, '2025-03-10 12:00:00'),
-(2, 2, '2025-03-11 16:00:00'),
-(3, 3, '2025-03-12 10:00:00');
+INSERT INTO artifex.avere (id_visita, id_luogo, id_evento) VALUES 
+(1, 2, 1), 
+(2, 3, 2), 
+(3, 1, 1), 
+(4, 4, 3);
 
-INSERT INTO Ricevere (Plichi_id, Sedi_id, data) VALUES 
-(1, 2, '2025-03-11 09:00:00'),
-(2, 3, '2025-03-12 11:00:00'),
-(3, 1, '2025-03-13 14:00:00');
-
-INSERT INTO Ritirare (Plichi_id, Destinatari_id, data, data_conferma) VALUES 
-(1, 1, '2025-03-11 14:00:00', '2025-03-11 14:05:00'),
-(2, 2, '2025-03-12 16:00:00', '2025-03-12 16:10:00'),
-(3, 3, '2025-03-13 17:00:00', '2025-03-13 17:05:00');
-
-INSERT INTO Lavorare (personale_id, Sedi_id) VALUES 
-(1, 1);
-
+INSERT INTO artifex.prenotare (id_utente, id_visita) VALUES 
+(1, 1), 
+(2, 2), 
+(3, 3), 
+(4, 4),
+(1, 2);
 
