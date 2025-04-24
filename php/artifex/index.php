@@ -16,7 +16,10 @@ $routerClass->addRoute('GET','home/index','HomeController','presentation1');
 $routerClass->addRoute('GET','home/login','LoginController','loginAction');
 $routerClass->addRoute('POST','home/login','LoginController','processLogin');
 $routerClass->addRoute('GET', 'home/profilo', 'LoginController', 'profilo');
-
+$routerClass->addRoute('GET', 'profilo/edit-email', 'ProfileController', 'editEmailForm');
+$routerClass->addRoute('POST', 'profilo/updateEmail', 'ProfileController', 'updateEmail');
+$routerClass->addRoute('GET', 'profilo/edit-password', 'ProfileController', 'editPasswordForm');
+$routerClass->addRoute('POST', 'profilo/updatePassword', 'ProfileController', 'updatePassword');
 
 
 $reValue=$routerClass->match($url,$method);

@@ -70,6 +70,42 @@ class Utente
         return null;
     }
 
+    /**
+     * Aggiorna l'email dell'utente
+     *
+     * @param string $newEmail La nuova email
+     * @return bool True se l'aggiornamento è avvenuto con successo, False altrimenti
+     */
+    public function updateEmail(string $newEmail): bool
+    {
+        $stmt = $this->db->prepare("UPDATE utenti SET mail = ? WHERE id = ?");
+        $result = $stmt->execute([$newEmail, $this->id]);
+
+        if ($result) {
+            $this->mail = $newEmail;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Aggiorna la password dell'utente
+     *
+     * @param string $hashedPassword La nuova password già hashata
+     * @return bool True se l'aggiornamento è avvenuto con successo, False altrimenti
+     */
+    public function updatePassword(string $hashedPassword): bool
+    {
+        $stmt = $this->db->prepare("UPDATE utenti SET password = ? WHERE id = ?");
+        $result = $stmt->execute([$hashedPassword, $this->id]);
+
+        if ($result) {
+            $this->password = $hashedPassword;
+        }
+
+        return $result;
+    }
+
     public function getId(): int { return $this->id; }
     public function getNome(): string { return $this->nome; }
     public function getTelefono(): string { return $this->telefono; }
