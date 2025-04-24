@@ -1,0 +1,57 @@
+
+.topnav {
+    background-color: dodgerblue;
+    padding:20px;
+}
+.topnav a {
+    color: white;
+    margin: 10px;
+    padding: 10px;
+}
+
+.footer {
+    padding:10px;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: dodgerblue;
+    color: white;
+    text-align: center;
+}
+
+.footer p{
+    color: white;
+    font-weight: bold;
+}
+
+p{
+    color: blueviolet;
+    font-weight: bold;
+}
+.content {
+    margin-top: 1vw;
+    color: black;
+    flex: 1;
+}
+html, body {
+    height: 100%;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+table {
+    margin-left: 2vw;
+    align-content: center;
+    border-spacing: 10px;
+}
+
+th {
+    background-color: dodgerblue;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+}
+td {
+    text-align: center;
+}
