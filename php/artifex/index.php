@@ -56,5 +56,17 @@ if (isset($reValue['params'])) {
     $params = $reValue['params'];
 }
 
-// Chiama il metodo del controller con i parametri necessari
-call_user_func_array([$controllerObj, $action], $params);
+$methodReflection = new ReflectionMethod($controllerObj, $action);
+$methodParams = $methodReflection->getParameters();
+
+$callParams = [];
+foreach ($methodParams as $index => $param) {
+    if ($index === 0 && $param->getType() && $param->getType()->getName() === PDO::class) {
+        // Il primo parametro è di tipo PDO, quindi passiamo $db
+        $callParams[] = $db;
+    }
+}
+
+$callParams = array_merge($callParams, $params);
+
+call_user_func_array([$controllerObj, $action], $callParams);
