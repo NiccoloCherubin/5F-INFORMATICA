@@ -40,10 +40,10 @@ class VisiteController
     /**
      * Mostra i dettagli di una visita specifica
      */
-    public function show($id)
+    public function show()
     {
         $visita = new Visita($this->db);
-        $visita = $visita->fromID($id);
+        $visita = $visita->fromID($_GET['id']);
 
         if (!$visita) {
             // Visita non trovata, reindirizza all'elenco

@@ -1,7 +1,7 @@
 <?php require_once 'header.php'; ?>
 
     <div class="container mt-4">
-        <a href="<?= $appConfig['baseUrl'] ?>home/visite" class="btn btn-secondary mb-3">
+        <a href="<?= $appConfig['baseURL'].$appConfig['prjName'] ?>home/visite" class="btn btn-secondary mb-3">
             &larr; Torna all'elenco
         </a>
 
@@ -70,7 +70,7 @@
 
                         <?php if (!isset($_SESSION['user_id'])): ?>
                             <p>Effettua l'accesso per prenotare questa visita.</p>
-                            <a href="<?= $appConfig['baseUrl'] ?>home/login" class="btn btn-primary">Accedi</a>
+                            <a href="<?= $appConfig['baseURL'].$appConfig['prjName'] ?>home/login" class="btn btn-primary">Accedi</a>
                         <?php elseif ($prenotataUtente): ?>
                             <p>Hai già prenotato questa visita.</p>
                             <a href="<?= $appConfig['baseUrl'] ?>visite/cancella-prenotazione/<?= $visita->getId() ?>"

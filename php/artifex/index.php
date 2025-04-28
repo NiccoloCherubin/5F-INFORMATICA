@@ -1,6 +1,6 @@
 <?php
 $appConfig= require 'appConfig.php';
-$url = $_SERVER['REQUEST_URI'];
+$url = explode('?',$_SERVER['REQUEST_URI'])[0];
 $method =$_SERVER['REQUEST_METHOD'];
 
 $url=strtolower($url);
@@ -15,11 +15,13 @@ $routerClass = new \Router\Router();
 $routerClass->addRoute('GET','home/index','HomeController','presentation1');
 $routerClass->addRoute('GET','home/login','LoginController','loginAction');
 
+
+
 // Rotte per le visite
 $routerClass->addRoute('GET','home/visite','VisiteController','index');  // Visualizza tutte le visite
-$routerClass->addRoute('GET','visite/dettaglio/{id}','VisiteController','show'); // Visualizza dettagli di una visita
-$routerClass->addRoute('GET','visite/prenota/{id}','VisiteController','prenota'); // Prenotazione visita
-$routerClass->addRoute('GET','visite/cancella-prenotazione/{id}','VisiteController','cancellaPrenotazione'); // Cancella prenotazione
+$routerClass->addRoute('GET','visite/dettaglio','VisiteController','show'); // Visualizza dettagli di una visita
+$routerClass->addRoute('GET','visite/prenota','VisiteController','prenota'); // Prenotazione visita
+$routerClass->addRoute('GET','visite/cancella-prenotazione','VisiteController','cancellaPrenotazione'); // Cancella prenotazione
 $routerClass->addRoute('GET','visite/mie-prenotazioni','VisiteController','miePrenotazioni'); // Visualizza le proprie prenotazioni
 
 $routerClass->addRoute('POST','home/login','LoginController','processLogin');

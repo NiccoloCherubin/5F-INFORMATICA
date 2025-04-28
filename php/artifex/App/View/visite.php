@@ -5,19 +5,6 @@ require_once 'header.php';
 <div class="container mt-4">
     <h1>Elenco delle visite guidate</h1>
 
-    <form action="" method="GET" class="mb-4">
-        <div class="input-group">
-            <input
-                    type="text"
-                    name="search"
-                    class="form-control"
-                    placeholder="Cerca visita..."
-                    value="<?= htmlspecialchars($searchTerm ?? '') ?>"
-            >
-            <button type="submit" class="btn btn-primary">Cerca</button>
-        </div>
-    </form>
-
     <div class="row">
         <?php if (!empty($visite)): ?>
             <?php foreach ($visite as $visita): ?>
@@ -31,7 +18,7 @@ require_once 'header.php';
                                 <strong>Guida:</strong> <?= htmlspecialchars($visita->getNomeGuida()) ?>
                             </p>
                             <a
-                                    href="<?= $appConfig['baseURL'] ?>visite/dettaglio/<?= $visita->getId() ?>"
+                                    href="<?= $appConfig['baseURL'].$appConfig['prjName'] ?>visite/dettaglio?id=<?= $visita->getId() ?>"
                                     class="btn btn-primary mt-auto"
                             >
                                 Dettagli
